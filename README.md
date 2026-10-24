@@ -70,43 +70,6 @@ The database is designed with full 3NF normalization and foreign key integrity:
 
 ---
 
-## 🧮 25 SQL Analytics Practice Queries
-
-### 🟢 Beginner Level (Questions 1 - 8)
-1. **Q1:** Find all players who represent India with full name, role, batting/bowling style.
-2. **Q2:** Show all cricket matches played in the last 30 days sorted by recent first.
-3. **Q3:** Top 10 highest run scorers in ODI cricket with average and centuries.
-4. **Q4:** Cricket venues with seating capacity > 50,000 spectators.
-5. **Q5:** Calculate how many matches each team has won.
-6. **Q6:** Count how many players belong to each playing role.
-7. **Q7:** Highest individual batting score in each cricket format (Test, ODI, T20).
-8. **Q8:** Series started in 2024 with host country, type, start date, and total matches.
-
-### 🟡 Intermediate Level (Questions 9 - 16)
-9. **Q9:** All-rounders who scored > 1000 runs AND took > 50 wickets across their career.
-10. **Q10:** Details of last 20 completed matches with teams, margin, and venue.
-11. **Q11:** Cross-format player comparison (players who played at least 2 formats).
-12. **Q12:** Home vs Away team performance (venue country matches team country).
-13. **Q13:** 100+ run partnerships between consecutive batsmen in same innings.
-14. **Q14:** Bowling performance by venue for bowlers with >= 3 matches at same venue.
-15. **Q15:** Player performance in close matches (< 50 runs or < 5 wickets victory margin).
-16. **Q16:** Year-wise batting trends since 2020 (average runs and strike rate per year).
-
-### 🔴 Advanced Level (Questions 17 - 25)
-17. **Q17:** Toss advantage analysis: win percentage by toss decision (bat vs bowl first).
-18. **Q18:** Most economical bowlers in limited-overs cricket (ODI and T20).
-19. **Q19:** Batting consistency analysis using statistical standard deviation / variance.
-20. **Q20:** Format-wise match count and batting averages for Test, ODI, and T20.
-21. **Q21:** Comprehensive weighted ranking system:
-    - Batting points: `(runs × 0.01) + (average × 0.5) + (strike_rate × 0.3)`
-    - Bowling points: `(wickets × 2) + ((50 - average) × 0.5) + ((6 - economy) × 2)`
-    - Fielding points: `(catches × 3) + (stumpings × 5)`
-22. **Q22:** Head-to-head match prediction analysis between teams.
-23. **Q23:** Recent player form and momentum (last 5 vs last 10 innings, form category).
-24. **Q24:** Best consecutive batting partnerships combinations and success rates.
-25. **Q25:** Player career trajectory time-series evolution (Quarterly analysis).
-
----
 
 ## 🚀 Setup & Installation
 
@@ -204,13 +167,3 @@ Cricket API/
 
 ---
 
-## 🎓 Viva & Technical Interview Questions
-
-### Q1: Why use 3NF normalization for cricket statistics?
-**Answer:** In cricket, matches, players, and teams have complex many-to-many relationships. Splitting data into separate entities (`players`, `matches`, `batting_stats`, `bowling_stats`) avoids redundancy (e.g. repeating player country or venue capacity in every ball or innings row), prevents update anomalies, and ensures data integrity through foreign keys.
-
-### Q2: How does the application handle RapidAPI rate limits?
-**Answer:** The `CricbuzzClient` implements an exponential backoff retry mechanism. When an HTTP 429 status code is received, the client pauses for `retry_delay * attempt` seconds before retrying up to 3 times. If unconfigured or quota is exhausted, it gracefully falls back to structured mock data.
-
-### Q3: How do you prevent SQL injection in Streamlit data apps?
-**Answer:** In our `services/` and `utils/db_connection.py`, all user-supplied parameters are passed as parameterized bindings (`?` placeholders in SQLite or `%s` in PostgreSQL). Furthermore, in the custom SQL console, destructive commands (`DROP`, `DELETE`, `TRUNCATE`) are blocked.
